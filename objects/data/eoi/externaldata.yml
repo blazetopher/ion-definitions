@@ -1,4 +1,5 @@
 DatasetDescription:
+  edh_type: ""
   data_sampling: !enum
       NONE: "NONE"
       FIRST_LAST: "FIRST_LAST"

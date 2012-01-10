@@ -17,4 +17,73 @@ methods:
     out:
       success: True
 
+  # "ExternalDataHandler_Types" is an entry in the datastore which stores a key/value mapping allowing the EOAS to dynamically determine the ExternalDataHandler that should be used in a given Driver (Service Process)
+  #
+  #  The entry is a nested map of the form:
+  #  {
+  #    <edh-type-key>: {
+  #        "class": <class-namespace>,
+  #        "dataset_description": DatasetDescription_obj,
+  #    }
+  #  }
+  #
+  #  For example, there is currently only one concrete handler and it's for DAP data, so the current state of the mapping would look like:
+  #  {
+  #    "DAP": {
+  #        "class": ion.eoi.agent.handler.dap_external_data_handler.DapExternalDataHandler,
+  #        "dataset_description": DatasetDescription_obj,
+  #    }
+  #  }
+  #
+  #  The CRUD ops in EOAS allow dynamic management of the mapping
+  #
+  #  The EOAS will call the read op to obtain the latest mapping prior to spawning a new Service Process
 
+  create_external_data_handler_type:
+    docstring: Adds a new EDH Type to the ExternalDataHandler_Types datastore entry
+    in:
+      edh_type_key: ""
+      edh_entry: {"class": "", "dataset_description": !DatasetDescription, }
+    out:
+      success: True
+
+  read_external_data_handler_type:
+    docstring: Retrieve the ExternalDataHandler_Types entry
+    in:
+      edh_type_key: ""
+    out:
+      edh_entry: {"class": "", "dataset_description": !DatasetDescription, }
+
+  update_external_data_handler_type:
+    docstring: Update an entry within the ExternalDataHandler_Types mapping
+    in:
+      edh_type_key: ""
+      edh_entry: {"class": "", "dataset_description": !DatasetDescription, }
+    out:
+      success: True
+
+  delete_external_data_handler_type:
+    docstring: Deletes the ExternalDataHandler_Types entry
+    in:
+      edh_type_key: ""
+    out:
+      success: True
+
+  get_external_data_handler_type_keys:
+    docstring: Retrieves a list of the EDH Type keys currently registered
+    in:
+    out:
+      edh_type_keys: []
+
+  _get_external_data_handler_type_mapping:
+    docstring: Internal function to retrieve the entire ExternalDataHandler_Types entry from the datastore
+    in:
+    out:
+      external_data_handler_types_mapping: {}
+
+  _put_external_data_handler_type_mapping:
+    docstring: Internal function to store the entire ExternalDataHandler_Types entry in the datastore
+    in:
+      external_data_handler_types_mapping: {}
+    out:
+      success: True
